@@ -1063,6 +1063,7 @@
       }
 
       /* ============ Testimonials slider ============ */
+      /* ============ REVIEWS (Google-style, 3 moving rows) ============ */
       .testi-section {
         background: var(--pine);
         color: #fff;
@@ -1076,155 +1077,185 @@
         opacity: 0.35;
         color: var(--teal-soft);
       }
-      .slider-shell {
-        position: relative;
-        z-index: 2;
+      .rev-summary {
+        margin-bottom: 2.2rem;
       }
-      .slider {
-        display: flex;
-        gap: 1.2rem;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        padding-bottom: 0.4rem;
-        scroll-behavior: smooth;
-      }
-      .slider::-webkit-scrollbar {
-        display: none;
-      }
-      .testi {
-        scroll-snap-align: start;
-        flex: 0 0 calc((100% - 2.4rem) / 3);
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: var(--radius-lg);
-        padding: 1.9rem 1.7rem;
-        display: flex;
-        flex-direction: column;
-        min-height: 100%;
-      }
-      @media (max-width: 980px) {
-        .testi {
-          flex-basis: calc((100% - 1.2rem) / 2);
-        }
-      }
-      @media (max-width: 640px) {
-        .testi {
-          flex-basis: 100%;
-        }
-      }
-      .stars {
-        display: flex;
-        gap: 0.15rem;
-        color: var(--gold);
-        margin-bottom: 0.9rem;
-      }
-      .stars svg {
-        width: 18px;
-        height: 18px;
-      }
-      .testi blockquote {
-        margin: 0;
-        font-size: 1rem;
-        line-height: 1.6;
-        color: #eaf5f1;
-        flex: 1;
-      }
-      .testi .who {
-        margin-top: 1.3rem;
-        display: flex;
+      .rev-rating {
+        display: inline-flex;
         align-items: center;
-        gap: 0.8rem;
+        gap: 0.55rem;
+        flex-wrap: wrap;
+        justify-content: center;
       }
-      .testi .who .av {
-        width: 52px;
-        height: 52px;
-        border-radius: 50%;
-        background: var(--teal-soft);
-        color: #fff;
-        display: grid;
-        place-items: center;
-        font-weight: 700;
-        font-family: var(--ff-display);
-        flex: none;
-        overflow: hidden;
-        border: 2px solid rgba(255, 255, 255, 0.35);
+      .rev-rating-stars {
+        color: var(--gold);
+        font-size: 1.35rem;
+        letter-spacing: 2px;
+        line-height: 1;
       }
-      .testi .who .av img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .testi .who b {
-        display: block;
-        font-family: var(--ff-body);
-        font-weight: 700;
+      .rev-rating-text {
+        color: var(--muted-on-dark);
         font-size: 0.95rem;
       }
-      .testi .who small {
-        color: var(--muted-on-dark);
-        font-size: 0.82rem;
+      .rev-rating-text b {
+        color: #fff;
+        font-weight: 700;
       }
-      .slider-nav {
+      .rev-sub {
+        max-width: 40rem;
+        margin: 0.7rem auto 0;
+        color: var(--muted-on-dark);
+        font-size: 1.02rem;
+        line-height: 1.6;
+      }
+
+      .rev-rows {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+        /* fade the left/right edges like the reference */
+        -webkit-mask-image: linear-gradient(
+          90deg,
+          transparent 0,
+          #000 7%,
+          #000 93%,
+          transparent 100%
+        );
+        mask-image: linear-gradient(
+          90deg,
+          transparent 0,
+          #000 7%,
+          #000 93%,
+          transparent 100%
+        );
+      }
+      .rev-row {
+        overflow: hidden;
+      }
+      .rev-track {
+        display: flex;
+        gap: 0;
+        width: max-content;
+        will-change: transform;
+        animation: rev-marquee var(--dur, 80s) linear infinite;
+      }
+      .rev-clone {
+        display: flex;
+        gap: 0;
+      }
+      .rev-row.rtl .rev-track {
+        animation-name: rev-marquee-rtl;
+      }
+      @keyframes rev-marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      @keyframes rev-marquee-rtl {
+        from {
+          transform: translateX(-50%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+      /* pause when the visitor wants a closer read */
+      .rev-rows:hover .rev-track,
+      .rev-rows:focus-within .rev-track {
+        animation-play-state: paused;
+      }
+
+      .rev {
+        flex: 0 0 clamp(300px, 26vw, 380px);
+        margin-right: 1.1rem;
+        box-sizing: border-box;
+        background: #fff;
+        color: var(--ink);
+        border-radius: 16px;
+        padding: 1.15rem 1.25rem 1.25rem;
+        box-shadow: 0 12px 30px -18px rgba(3, 24, 34, 0.55);
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .rev-head {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-top: 1.6rem;
+        gap: 0.75rem;
       }
-      .slider-arrows {
-        display: flex;
-        gap: 0.6rem;
-      }
-      .slider-arrows button {
-        width: 46px;
-        height: 46px;
+      .rev-av {
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
-        border: 1.5px solid rgba(255, 255, 255, 0.35);
-        background: rgba(255, 255, 255, 0.06);
-        color: #fff;
+        flex: none;
         display: grid;
         place-items: center;
-        cursor: pointer;
-        transition:
-          background 0.18s ease,
-          border-color 0.18s ease;
+        color: #fff;
+        font-weight: 700;
+        font-family: var(--ff-body);
+        font-size: 1.05rem;
+        background: var(--rc, var(--teal));
       }
-      .slider-arrows button:hover {
-        background: var(--amber);
-        border-color: var(--amber);
-        color: var(--cta-ink);
-      }
-      .slider-arrows svg {
-        width: 20px;
-        height: 20px;
-      }
-      .slider-dots {
+      .rev-id {
         display: flex;
-        gap: 0.5rem;
+        flex-direction: column;
+        gap: 0.15rem;
+        min-width: 0;
       }
-      .slider-dots button {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        border: none;
-        background: rgba(255, 255, 255, 0.28);
-        cursor: pointer;
-        padding: 0;
-        transition:
-          background 0.18s ease,
-          transform 0.18s ease;
+      .rev-name {
+        font-family: var(--ff-body);
+        font-weight: 700;
+        font-size: 0.98rem;
+        color: var(--ink);
+        line-height: 1.1;
       }
-      .slider-dots button.active {
-        background: var(--amber);
-        transform: scale(1.25);
+      .rev-stars {
+        color: var(--gold);
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        line-height: 1;
+      }
+      .rev-g {
+        margin-left: auto;
+        flex: none;
+      }
+      .rev-text {
+        margin: 0;
+        font-size: 0.94rem;
+        line-height: 1.55;
+        color: #33454f;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
       .testi-cta {
         margin-top: 2.2rem;
         text-align: center;
         position: relative;
         z-index: 2;
+      }
+      @media (max-width: 640px) {
+        .rev {
+          flex-basis: 82vw;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .rev-track {
+          animation: none;
+        }
+        .rev-row {
+          overflow-x: auto;
+          scrollbar-width: none;
+        }
+        .rev-row::-webkit-scrollbar {
+          display: none;
+        }
       }
 
       /* ============ FAQ ============ */
@@ -2432,278 +2463,1874 @@
       </svg>
       <div class="wrap">
         <div
-          class="section-head reveal center"
+          class="section-head reveal center rev-summary"
           style="position: relative; z-index: 2"
         >
-          <span class="eyebrow on-dark">Real patients, real recoveries</span>
-          <h2 style="color: #fff">People in Birmingham are moving again</h2>
+          <div class="rev-rating" aria-label="Rated 5.0 out of 5">
+            <span class="rev-rating-stars" aria-hidden="true">★★★★★</span>
+            <span class="rev-rating-text"
+              ><b>5.0/5</b> based on <b>21</b> Google reviews</span
+            >
+          </div>
+          <h2 style="color: #fff">What our patients say</h2>
+          <p class="rev-sub">
+            Real reviews from people across Birmingham who came in sore and left
+            moving again.
+          </p>
         </div>
 
-        <div class="slider-shell reveal">
-          <div
-            class="slider"
-            id="testiSlider"
-            aria-label="Patient reviews"
-            tabindex="0"
-          >
-            <figure class="testi">
-              <div class="stars" aria-label="5 out of 5 stars">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  />
-                </svg>
-              </div>
-              <blockquote>
-                "I'd struggled with lower back pain for months. The team at
-                TheraVive helped me feel like myself again — professional,
-                knowledgeable and genuinely kind."
-              </blockquote>
-              <figcaption class="who">
-                <span class="av"
-                  ><img
-                    src="https://randomuser.me/api/portraits/women/44.jpg"
-                    alt="Photo of Sarah M."
-                    loading="lazy"
-                    onerror="this.parentNode.textContent = 'S'"
-                  />S</span
-                >
-                <div>
-                  <b>Sarah M.</b><small>Lower back pain · Clinic</small>
+        <div class="rev-rows reveal" id="revRows">
+          <div class="rev-row">
+            <div class="rev-track" style="--dur: 78s">
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(106 42% 46%)">I</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Irfan</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
                 </div>
-              </figcaption>
-            </figure>
-
-            <figure class="testi">
-              <div class="stars" aria-label="5 out of 5 stars">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  />
-                </svg>
-              </div>
-              <blockquote>
-                "From the moment I walked in I felt at ease. The physiotherapist
-                took the time to understand my issue and tailored a programme
-                that really worked."
-              </blockquote>
-              <figcaption class="who">
-                <span class="av"
-                  ><img
-                    src="https://randomuser.me/api/portraits/women/68.jpg"
-                    alt="Photo of Jane Wilcox"
-                    loading="lazy"
-                    onerror="this.parentNode.textContent = 'J'"
-                  />J</span
-                >
-                <div>
-                  <b>Jane Wilcox</b><small>Shoulder pain · Clinic</small>
+                <p class="rev-text">
+                  Had longstanding neck and back pain. Improved with physio and
+                  targeted exercises. I would highly recommend TheraVive.
+                  Extremely happy with the service. Thank you
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(21 42% 46%)">D</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Dip Chakrabarty</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
                 </div>
-              </figcaption>
-            </figure>
-
-            <figure class="testi">
-              <div class="stars" aria-label="5 out of 5 stars">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  />
-                </svg>
-              </div>
-              <blockquote>
-                "After my knee surgery I couldn't travel easily. The home physio
-                sessions were convenient and just as effective as clinic
-                appointments. The team is amazing."
-              </blockquote>
-              <figcaption class="who">
-                <span class="av"
-                  ><img
-                    src="https://randomuser.me/api/portraits/men/32.jpg"
-                    alt="Photo of Dan Ellis"
-                    loading="lazy"
-                    onerror="this.parentNode.textContent = 'D'"
-                  />D</span
-                >
-                <div>
-                  <b>Dan Ellis</b
-                  ><small>Post-surgery rehab · Home visits</small>
+                <p class="rev-text">
+                  Highly recommend. I visited the place and their treatment was
+                  really amazing, and the way they care for people is really
+                  commendable.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(93 42% 46%)">M</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Monish Goon</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
                 </div>
-              </figcaption>
-            </figure>
-
-            <figure class="testi">
-              <div class="stars" aria-label="5 out of 5 stars">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  />
-                </svg>
+                <p class="rev-text">
+                  Great experience at this physiotherapy centre. The team is
+                  caring, skilled, and truly focused on recovery. Treatment
+                  sessions were personalized and effective, and I felt
+                  improvement after each visit. The clinic is clean, organized,
+                  and welcoming.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(173 42% 46%)">S</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Shazzy Khan</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Positive experiences with knowledgeable, friendly, and
+                  professional staff who provide effective, personalized
+                  treatments. Highly recommend.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(175 42% 46%)">F</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Faizaan Ayaz</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Zia was incredibly helpful throughout my physiotherapy —
+                  professional, knowledgeable, and genuinely supportive.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(54 42% 46%)">M</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Muhammad Ammar</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Great experience — friendly team and effective treatment.
+                  Would recommend.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(22 42% 46%)">R</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Rashid Mehmood</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Excellent physiotherapy service! I had severe shoulder pain,
+                  and the treatment was very helpful. The clinic is clean, the
+                  staff are friendly and professional, and they make you feel
+                  comfortable. I highly recommend this clinic.
+                </p>
+              </article>
+              <div class="rev-clone" aria-hidden="true">
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(106 42% 46%)">I</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Irfan</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Had longstanding neck and back pain. Improved with physio
+                    and targeted exercises. I would highly recommend TheraVive.
+                    Extremely happy with the service. Thank you
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(21 42% 46%)">D</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Dip Chakrabarty</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Highly recommend. I visited the place and their treatment
+                    was really amazing, and the way they care for people is
+                    really commendable.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(93 42% 46%)">M</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Monish Goon</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Great experience at this physiotherapy centre. The team is
+                    caring, skilled, and truly focused on recovery. Treatment
+                    sessions were personalized and effective, and I felt
+                    improvement after each visit. The clinic is clean,
+                    organized, and welcoming.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(173 42% 46%)">S</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Shazzy Khan</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Positive experiences with knowledgeable, friendly, and
+                    professional staff who provide effective, personalized
+                    treatments. Highly recommend.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(175 42% 46%)">F</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Faizaan Ayaz</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Zia was incredibly helpful throughout my physiotherapy —
+                    professional, knowledgeable, and genuinely supportive.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(54 42% 46%)">M</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Muhammad Ammar</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Great experience — friendly team and effective treatment.
+                    Would recommend.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(22 42% 46%)">R</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Rashid Mehmood</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Excellent physiotherapy service! I had severe shoulder pain,
+                    and the treatment was very helpful. The clinic is clean, the
+                    staff are friendly and professional, and they make you feel
+                    comfortable. I highly recommend this clinic.
+                  </p>
+                </article>
               </div>
-              <blockquote>
-                "The free first session sold me — I got real treatment, not a
-                sales pitch. Three sessions later my sciatica is finally under
-                control."
-              </blockquote>
-              <figcaption class="who">
-                <span class="av"
-                  ><img
-                    src="https://randomuser.me/api/portraits/men/75.jpg"
-                    alt="Photo of Imran K."
-                    loading="lazy"
-                    onerror="this.parentNode.textContent = 'I'"
-                  />I</span
-                >
-                <div><b>Imran K.</b><small>Sciatica · Clinic</small></div>
-              </figcaption>
-            </figure>
-
-            <figure class="testi">
-              <div class="stars" aria-label="5 out of 5 stars">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  /></svg
-                ><svg viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="m12 2 3 6.3 7 .9-5 4.7 1.3 6.8L12 17.8 5.4 20.7 6.7 13.9 1.7 9.2l7-.9Z"
-                  />
-                </svg>
-              </div>
-              <blockquote>
-                "Online sessions fit around my work perfectly. Clear exercises,
-                regular check-ins, and my runner's knee is back to full
-                training."
-              </blockquote>
-              <figcaption class="who">
-                <span class="av"
-                  ><img
-                    src="https://randomuser.me/api/portraits/women/12.jpg"
-                    alt="Photo of Priya S."
-                    loading="lazy"
-                    onerror="this.parentNode.textContent = 'P'"
-                  />P</span
-                >
-                <div><b>Priya S.</b><small>Runner's knee · Online</small></div>
-              </figcaption>
-            </figure>
-          </div>
-
-          <div class="slider-nav">
-            <div class="slider-arrows">
-              <button
-                type="button"
-                id="testiPrev"
-                aria-label="Previous reviews"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M19 12H5M11 18l-6-6 6-6" />
-                </svg>
-              </button>
-              <button type="button" id="testiNext" aria-label="Next reviews">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </button>
             </div>
-            <div
-              class="slider-dots"
-              id="testiDots"
-              role="tablist"
-              aria-label="Review pages"
-            ></div>
+          </div>
+          <div class="rev-row rtl">
+            <div class="rev-track" style="--dur: 94s">
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(21 42% 46%)">G</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Gabriela Radu</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  I just wanted to say thank you for all the physiotherapy
+                  sessions I&#x27;ve had with you. I really appreciate your help
+                  and professionalism, and I&#x27;m very pleased with the
+                  progress so far. It&#x27;s been a great experience!
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(6 42% 46%)">M</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Mithila</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  I had a great experience at this physiotherapy clinic. The
+                  staff were friendly, professional, and really took the time to
+                  understand my problem. The treatment was effective and
+                  everything was explained clearly. I noticed real improvement
+                  and felt well supported throughout. Highly recommended!
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(84 42% 46%)">M</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Moon Dhar</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Excellent physiotherapy center with knowledgeable and caring
+                  staff. The therapists are professional, attentive, and create
+                  personalized treatment plans that really work. The clinic is
+                  clean, well-equipped, and welcoming.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(119 42% 46%)">A</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Apu Dhar</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Highly recommended! I recently visited TheraVive PhysioCare in
+                  Birmingham, and I&#x27;m genuinely impressed with the care and
+                  professionalism.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(267 42% 46%)">D</span>
+                  <div class="rev-id">
+                    <b class="rev-name">David Fletcher</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  I had pain and went to their care, had treatment and they
+                  sorted it for me. Thank you.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(40 42% 46%)">H</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Hanzla Lashari</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Highly recommended. Professional, welcoming and effective from
+                  start to finish.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(146 42% 46%)">S</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Sanila Shoaib</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  They are not physiotherapists — they are magicians! My neck
+                  was not moving at all and no painkiller was giving me relief.
+                  With regular sessions and their guidance, I no longer depend
+                  on painkillers. Magic!
+                </p>
+              </article>
+              <div class="rev-clone" aria-hidden="true">
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(21 42% 46%)">G</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Gabriela Radu</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    I just wanted to say thank you for all the physiotherapy
+                    sessions I&#x27;ve had with you. I really appreciate your
+                    help and professionalism, and I&#x27;m very pleased with the
+                    progress so far. It&#x27;s been a great experience!
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(6 42% 46%)">M</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Mithila</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    I had a great experience at this physiotherapy clinic. The
+                    staff were friendly, professional, and really took the time
+                    to understand my problem. The treatment was effective and
+                    everything was explained clearly. I noticed real improvement
+                    and felt well supported throughout. Highly recommended!
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(84 42% 46%)">M</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Moon Dhar</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Excellent physiotherapy center with knowledgeable and caring
+                    staff. The therapists are professional, attentive, and
+                    create personalized treatment plans that really work. The
+                    clinic is clean, well-equipped, and welcoming.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(119 42% 46%)">A</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Apu Dhar</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Highly recommended! I recently visited TheraVive PhysioCare
+                    in Birmingham, and I&#x27;m genuinely impressed with the
+                    care and professionalism.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(267 42% 46%)">D</span>
+                    <div class="rev-id">
+                      <b class="rev-name">David Fletcher</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    I had pain and went to their care, had treatment and they
+                    sorted it for me. Thank you.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(40 42% 46%)">H</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Hanzla Lashari</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Highly recommended. Professional, welcoming and effective
+                    from start to finish.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(146 42% 46%)">S</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Sanila Shoaib</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    They are not physiotherapists — they are magicians! My neck
+                    was not moving at all and no painkiller was giving me
+                    relief. With regular sessions and their guidance, I no
+                    longer depend on painkillers. Magic!
+                  </p>
+                </article>
+              </div>
+            </div>
+          </div>
+          <div class="rev-row">
+            <div class="rev-track" style="--dur: 86s">
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(95 42% 46%)">D</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Dominik Jakubowski</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Excellent service from TheraVive PhysioCare. My mum was
+                  suffering with sciatica and struggling with daily activities.
+                  The team were professional, knowledgeable, and supportive
+                  throughout her treatment. She&#x27;s seen a huge improvement
+                  and is now much more comfortable and mobile. Highly
+                  recommended!
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(137 42% 46%)">B</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Balwinder Kaur</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Very amazing experience, staff were very caring and cautious,
+                  super friendly and fast at their service and overall really
+                  great support. I 100% recommend coming here — 10/10 customer
+                  service with respect and utmost care.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(267 42% 46%)">N</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Nazeeb</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  I was struggling with plantar fasciitis and the pain was
+                  affecting my daily routine. After physiotherapy treatment, my
+                  symptoms improved a lot. The physiotherapist was very
+                  knowledgeable, supportive, and explained everything clearly.
+                  I&#x27;m very happy with the results and would highly
+                  recommend this clinic.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(235 42% 46%)">R</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Ramzan Sarki</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Visited TheraVive clinic — a neat, clean and professional
+                  environment, competent clinician, highly recommended.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(190 42% 46%)">J</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Jamal Tariq</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  Highly recommended. The level of experience cannot be matched
+                  anywhere else.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(166 42% 46%)">M</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Muhammad Naeem</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  I had physiotherapy for my shoulder with Khalid and I am very
+                  satisfied with the treatment. Khalid was professional,
+                  helpful, and supportive throughout my recovery. I highly
+                  recommend him.
+                </p>
+              </article>
+              <article class="rev">
+                <div class="rev-head">
+                  <span class="rev-av" style="--rc: hsl(112 42% 46%)">I</span>
+                  <div class="rev-id">
+                    <b class="rev-name">Izabela Jakubowska</b>
+                    <span class="rev-meta"
+                      ><span class="rev-stars" aria-hidden="true"
+                        >★★★★★</span
+                      ></span
+                    >
+                  </div>
+                  <svg
+                    class="rev-g"
+                    viewBox="0 0 48 48"
+                    width="20"
+                    height="20"
+                    aria-label="Google review"
+                    role="img"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                    <path
+                      fill="#FF3D00"
+                      d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                    />
+                    <path
+                      fill="#4CAF50"
+                      d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                    />
+                    <path
+                      fill="#1976D2"
+                      d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                    />
+                  </svg>
+                </div>
+                <p class="rev-text">
+                  I was in terrible pain (sciatica). I had trouble sitting,
+                  walking, or lying down — I couldn&#x27;t even sleep. My son
+                  scheduled an appointment with TheraVive PhysioCare. After the
+                  first visit I felt relief, and now, after a few sessions, I
+                  can function normally. I wholeheartedly recommend this clinic.
+                  Thank you!
+                </p>
+              </article>
+              <div class="rev-clone" aria-hidden="true">
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(95 42% 46%)">D</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Dominik Jakubowski</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Excellent service from TheraVive PhysioCare. My mum was
+                    suffering with sciatica and struggling with daily
+                    activities. The team were professional, knowledgeable, and
+                    supportive throughout her treatment. She&#x27;s seen a huge
+                    improvement and is now much more comfortable and mobile.
+                    Highly recommended!
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(137 42% 46%)">B</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Balwinder Kaur</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Very amazing experience, staff were very caring and
+                    cautious, super friendly and fast at their service and
+                    overall really great support. I 100% recommend coming here —
+                    10/10 customer service with respect and utmost care.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(267 42% 46%)">N</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Nazeeb</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    I was struggling with plantar fasciitis and the pain was
+                    affecting my daily routine. After physiotherapy treatment,
+                    my symptoms improved a lot. The physiotherapist was very
+                    knowledgeable, supportive, and explained everything clearly.
+                    I&#x27;m very happy with the results and would highly
+                    recommend this clinic.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(235 42% 46%)">R</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Ramzan Sarki</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Visited TheraVive clinic — a neat, clean and professional
+                    environment, competent clinician, highly recommended.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(190 42% 46%)">J</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Jamal Tariq</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    Highly recommended. The level of experience cannot be
+                    matched anywhere else.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(166 42% 46%)">M</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Muhammad Naeem</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    I had physiotherapy for my shoulder with Khalid and I am
+                    very satisfied with the treatment. Khalid was professional,
+                    helpful, and supportive throughout my recovery. I highly
+                    recommend him.
+                  </p>
+                </article>
+                <article class="rev">
+                  <div class="rev-head">
+                    <span class="rev-av" style="--rc: hsl(112 42% 46%)">I</span>
+                    <div class="rev-id">
+                      <b class="rev-name">Izabela Jakubowska</b>
+                      <span class="rev-meta"
+                        ><span class="rev-stars" aria-hidden="true"
+                          >★★★★★</span
+                        ></span
+                      >
+                    </div>
+                    <svg
+                      class="rev-g"
+                      viewBox="0 0 48 48"
+                      width="20"
+                      height="20"
+                      aria-label="Google review"
+                      role="img"
+                    >
+                      <path
+                        fill="#FFC107"
+                        d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                      <path
+                        fill="#FF3D00"
+                        d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                      />
+                      <path
+                        fill="#4CAF50"
+                        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.3-11.3-7.9l-6.5 5C9.5 43.6 16.2 44 24 44z"
+                      />
+                      <path
+                        fill="#1976D2"
+                        d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.7-.4-3.9z"
+                      />
+                    </svg>
+                  </div>
+                  <p class="rev-text">
+                    I was in terrible pain (sciatica). I had trouble sitting,
+                    walking, or lying down — I couldn&#x27;t even sleep. My son
+                    scheduled an appointment with TheraVive PhysioCare. After
+                    the first visit I felt relief, and now, after a few
+                    sessions, I can function normally. I wholeheartedly
+                    recommend this clinic. Thank you!
+                  </p>
+                </article>
+              </div>
+            </div>
           </div>
         </div>
-
         <div class="testi-cta reveal">
           <a href="#book" class="btn btn-primary"
             >Join them — claim your free first session</a
