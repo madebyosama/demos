@@ -1628,6 +1628,57 @@
         }
       }
 
+      /* ============ Community workshops ============ */
+      .community {
+        background: var(--mist);
+        padding-block: clamp(48px, 6vw, 80px);
+      }
+      .community-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(26px, 4vw, 52px);
+        align-items: center;
+      }
+      .community-media img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        object-position: right;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--sage-line);
+        box-shadow: var(--shadow);
+      }
+      .community-media figcaption {
+        margin-top: 0.8rem;
+        font-size: 0.83rem;
+        font-weight: 600;
+        color: var(--muted);
+      }
+      .community-copy h2 {
+        font-size: clamp(1.7rem, 3.2vw, 2.35rem);
+        margin-top: 0.6rem;
+      }
+      .community-copy p {
+        color: var(--muted);
+        margin-top: 1rem;
+        max-width: 52ch;
+      }
+      .community-meta {
+        margin-top: 1.2rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--teal);
+      }
+      .community-meta a {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      @media (max-width: 860px) {
+        .community-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
       :focus-visible {
         outline: 3px solid var(--amber);
         outline-offset: 2px;
@@ -2184,7 +2235,7 @@
           <article class="way reveal">
             <div class="pic">
               <img
-                src="https://res.cloudinary.com/dk5tjvy0d/image/upload/c_limit,w_400/v1784648472/WhatsApp_Image_2026-07-20_at_8.28.57_PM_g4kz6r.jpg"
+                src="https://res.cloudinary.com/dk5tjvy0d/image/upload/c_limit,w_400/v1784729899/WhatsApp_Image_2026-07-22_at_6.20.24_PM_2_tsndlq.jpg"
                 alt="Online video physiotherapy consultation with a TheraVive Chartered Physiotherapist"
                 loading="lazy"
                 onerror="
@@ -4335,6 +4386,45 @@
           <a href="#book" class="btn btn-primary"
             >Join them — claim your free first session</a
           >
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COMMUNITY WORKSHOPS ============ -->
+    <section class="section community" id="community">
+      <div class="wrap">
+        <div class="community-grid">
+          <figure class="community-media reveal">
+            <img
+              src="https://res.cloudinary.com/dk5tjvy0d/image/upload/v1784730103/WhatsApp_Image_2026-07-22_at_6.20.24_PM_1_alqznd.jpg"
+              alt="The TheraVive PhysioCare team at a free back pain awareness workshop held at a Birmingham college"
+              loading="lazy"
+              width="800"
+              height="380"
+            />
+            <figcaption>
+              Free back pain awareness workshop — Birmingham college
+            </figcaption>
+          </figure>
+
+          <div class="community-copy reveal">
+            <span class="eyebrow">Out in the community</span>
+            <h2>Care that doesn't stop at our front door.</h2>
+            <p>
+              We recently ran a free back pain workshop at a Birmingham college
+              — one of a growing series covering everything from posture and
+              sports injuries to arthritis. Because people who understand their
+              own bodies recover faster and stay well longer.
+            </p>
+            <p>
+              More sessions are coming to colleges, workplaces and community
+              groups across Birmingham.
+            </p>
+            <p class="community-meta">
+              Want one for your group?
+              <a href="tel:+447886304409">Call +44 7886 304409</a>
+            </p>
+          </div>
         </div>
       </div>
     </section>
